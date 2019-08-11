@@ -17,6 +17,10 @@ if (!process.env.WEBHOOK) {
     throw new Error('Must provide WEBHOOK parameter');
 }
 
+['SIGINT', 'SIGTERM'].forEach(signal =>
+    process.on(signal, () => process.exit(1))
+);
+
 async function fetchFeedGuids(feedUrl) {
     const feed = await parser.parseURL(feedUrl);
     const guids = feed.items.map(({guid}) => guid);
