@@ -30,18 +30,22 @@ async function fetchFeedGuids(feedUrl) {
 async function main() {
     const alreadySeen = db.prepare('select * from feed_items').all();
     const seenGuids = new Set(alreadySeen.map(({guid}) => guid));
-    const feedGuids = await fetchFeedGuids(process.env.RSS);
-    const newGuids = feedGuids.filter(guid => !seenGuids.has(guid));
-    console.log(newGuids);
+    try {
+        const feedGuids = await fetchFeedGuids(process.env.RSS);
+        const newGuids = feedGuids.filter(guid => !seenGuids.has(guid));
+        console.log(newGuids);
 
-    if (newGuids.length > 0) {
-        await axios.get(process.env.WEBHOOK);
-        newGuids.forEach(guid =>
-            db.prepare('insert into feed_items (guid) values (?)').run(guid)
-        )
+        if (newGuids.length > 0) {
+            await axios.get(process.env.WEBHOOK);
+            newGuids.forEach(guid =>
+                db.prepare('insert into feed_items (guid) values (?)').run(guid)
+            )
+        }
+    } catch (ex) {
+        console.error(ex.message);
+    } finally{
+        setTimeout(() => main(), 30000);
     }
-
-    setTimeout(() => main(), 30000);
 }
 
 main();
