@@ -1,0 +1,11 @@
+{
+    "bindings": [
+      {
+        "name": "entity",
+        "type": "entityTrigger",
+        "direction": "in"
+      }
+    ],
+    "scriptFile": "../dist/AlerterEntity/index.js"
+  }
+  

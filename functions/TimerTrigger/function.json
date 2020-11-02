@@ -1,0 +1,16 @@
+{
+  "bindings": [
+    {
+      "name": "myTimer",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "*/30 * * * * *"
+    },
+    {
+      "name": "orchestrationClient",
+      "type": "orchestrationClient",
+      "direction": "in"
+    }
+  ],
+  "scriptFile": "../dist/TimerTrigger/index.js"
+}
