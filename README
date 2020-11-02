@@ -2,8 +2,4 @@
 
 Checks an RSS feed periodically and alerts a webhook on new items
 
-## Setup
-
-sqlite3 db.sqlite < create_table.sql
-
-docker run -it -e RSS=<rss feed> -e WEBHOOK=<webhook> -v $(pwd)/db.sqlite:/app/db.sqlite spiffytech/rss-alerter
+Designed for deployment to Azure Functions.
